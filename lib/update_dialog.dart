@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'number_progress.dart';
@@ -13,9 +15,13 @@ class UpdateDialog {
       @required title,
       @required updateContent,
       @required onUpdate,
+      double titleTextSize = 16.0,
+      double contextTextSize = 14.0,
+      double buttonTextSize = 14.0,
       double progress = -1.0,
       progressBackgroundColor = const Color(0xFFFFCDD2),
       topImage,
+      double extraHeight = 5.0,
       double radius = 4.0,
       themeColor = Colors.red,
       enableIgnore = false,
@@ -28,8 +34,12 @@ class UpdateDialog {
         title: title,
         updateContent: updateContent,
         onUpdate: onUpdate,
+        titleTextSize: titleTextSize,
+        contextTextSize: contextTextSize,
+        buttonTextSize: buttonTextSize,
         progress: progress,
         topImage: topImage,
+        extraHeight: extraHeight,
         radius: radius,
         themeColor: themeColor,
         progressBackgroundColor: progressBackgroundColor,
@@ -93,9 +103,13 @@ class UpdateDialog {
       @required title,
       @required updateContent,
       @required onUpdate,
+      double titleTextSize = 16.0,
+      double contextTextSize = 14.0,
+      double buttonTextSize = 14.0,
       double progress = -1.0,
       progressBackgroundColor = const Color(0xFFFFCDD2),
       topImage,
+      double extraHeight = 5.0,
       double radius = 4.0,
       themeColor = Colors.red,
       enableIgnore = false,
@@ -106,8 +120,12 @@ class UpdateDialog {
         title: title,
         updateContent: updateContent,
         onUpdate: onUpdate,
+        titleTextSize: titleTextSize,
+        contextTextSize: contextTextSize,
+        buttonTextSize: buttonTextSize,
         progress: progress,
         topImage: topImage,
+        extraHeight: extraHeight,
         radius: radius,
         themeColor: themeColor,
         progressBackgroundColor: progressBackgroundColor,
@@ -127,10 +145,23 @@ class UpdateWidget extends StatefulWidget {
   /// 升级标题
   final String title;
 
+  /// 更新内容
   final String updateContent;
+
+  /// 标题文字的大小
+  final double titleTextSize;
+
+  /// 更新文字内容的大小
+  final double contextTextSize;
+
+  /// 按钮文字的大小
+  final double buttonTextSize;
 
   /// 顶部图片
   final Widget topImage;
+
+  /// 拓展高度(适配顶部图片高度不一致的情况）
+  final double extraHeight;
 
   /// 边框圆角大小
   final double radius;
@@ -164,9 +195,13 @@ class UpdateWidget extends StatefulWidget {
       @required this.title,
       @required this.updateContent,
       @required this.onUpdate,
+      this.titleTextSize = 16.0,
+      this.contextTextSize = 14.0,
+      this.buttonTextSize = 14.0,
       this.progress = -1.0,
       this.progressBackgroundColor = const Color(0xFFFFCDD2),
       this.topImage,
+      this.extraHeight = 5.0,
       this.radius = 4.0,
       this.themeColor = Colors.red,
       this.enableIgnore = false,
@@ -195,7 +230,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
   @override
   Widget build(BuildContext context) {
     double dialogWidth =
-        widget.width <= 0 ? getScreenWidth(context) * 0.8 : widget.width;
+        widget.width <= 0 ? getFitWidth(context) * 0.618 : widget.width;
     return Material(
         type: MaterialType.transparency,
         child: Container(
@@ -209,8 +244,8 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                   width: dialogWidth,
                   child: widget.topImage != null
                       ? widget.topImage
-                      : Image.asset('assets/xupdate_bg_app_top.png',
-                          package: 'flutter_update_dialog'),
+                      : Image.asset('assets/update_bg_app_top.png',
+                          package: 'flutter_update_dialog', fit: BoxFit.fill),
                 ),
                 Container(
                   width: dialogWidth,
@@ -229,12 +264,19 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(widget.title, style: TextStyle(fontSize: 16)),
+                      Container(
+                        padding: EdgeInsets.only(top: widget.extraHeight),
+                        child: Text(widget.title,
+                            style: TextStyle(
+                                fontSize: widget.titleTextSize,
+                                color: Colors.black)),
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Text(widget.updateContent,
                             style: TextStyle(
-                                fontSize: 14, color: Color(0xFF666666))),
+                                fontSize: widget.contextTextSize,
+                                color: Color(0xFF666666))),
                       ),
                       widget.progress < 0
                           ? Column(children: <Widget>[
@@ -245,7 +287,9 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                                       borderRadius: BorderRadius.circular(5)),
                                   elevation: 0,
                                   highlightElevation: 0,
-                                  child: Text('升级'),
+                                  child: Text('升级',
+                                      style: TextStyle(
+                                          fontSize: widget.buttonTextSize)),
                                   color: widget.themeColor,
                                   textColor: Colors.white,
                                   onPressed: widget.onUpdate,
@@ -258,7 +302,10 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5)),
-                                        child: Text('忽略此版本'),
+                                        child: Text('忽略此版本',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    widget.buttonTextSize)),
                                         materialTapTargetSize:
                                             MaterialTapTargetSize.shrinkWrap,
                                         textColor: Color(0xFF666666),
@@ -288,7 +335,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                           constraints:
                               BoxConstraints(maxHeight: 30, maxWidth: 30),
                           padding: EdgeInsets.zero,
-                          icon: Image.asset('assets/xupdate_ic_close.png',
+                          icon: Image.asset('assets/update_ic_close.png',
                               package: 'flutter_update_dialog'),
                           onPressed: widget.onClose,
                         )
@@ -298,6 +345,10 @@ class _UpdateWidgetState extends State<UpdateWidget> {
             ),
           ),
         ));
+  }
+
+  double getFitWidth(BuildContext context) {
+    return min(getScreenHeight(context), getScreenWidth(context));
   }
 
   double getScreenHeight(BuildContext context) {
