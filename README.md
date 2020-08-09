@@ -77,21 +77,21 @@ dependencies:
 
 Name | Type | Default | Description
 :-|:-:|:-:|:-
-width | double | 0.618 * screenWidth ｜ dialog width
-title | String | / ｜ dialog title
-updateContent | String | / ｜ Update the modified content
-onUpdate | VoidCallback | / ｜ Click on the update button event
-titleTextSize | double | 16.0 ｜ The size of the title text
-contextTextSize | double | 14.0 ｜ The size of the title text
-buttonTextSize | double | 14.0 ｜ The size of the title text
-themeColor | Color | Colors.red ｜ Theme color
-progressBackgroundColor | Color | 0xFFFFCDD2 ｜ The background color of the progress bar
-topImage | Image | / ｜ Picture at the top
-extraHeight | double | 5.0 ｜ Extra height from top image
-radius | double | 4.0 ｜ Angle of corner
-enableIgnore | bool | false ｜ Whether to enable the ignore version button
-updateButtonText | String | '更新' ｜ Update button text
-ignoreButtonText | String | '忽略此版本' ｜ Ignore button text
-isForce | bool | false ｜ Whether to force update
-onIgnore | VoidCallback | / ｜ Click on the ignore button event
+width | double | 0.618 * screenWidth | dialog width
+title | String | / | dialog title
+updateContent | String | / | Update the modified content
+onUpdate | VoidCallback | / | Click on the update button event
+titleTextSize | double | 16.0 | The size of the title text
+contextTextSize | double | 14.0 | The size of the title text
+buttonTextSize | double | 14.0 | The size of the title text
+themeColor | Color | Colors.red | Theme color
+progressBackgroundColor | Color | 0xFFFFCDD2 | The background color of the progress bar
+topImage | Image | / | Picture at the top
+extraHeight | double | 5.0 | Extra height from top image
+radius | double | 4.0 | Angle of corner
+enableIgnore | bool | false | Whether to enable the ignore version button
+updateButtonText | String | '更新' | Update button text
+ignoreButtonText | String | '忽略此版本' | Ignore button text
+isForce | bool | false | Whether to force update
+onIgnore | VoidCallback | / | Click on the ignore button event
 
