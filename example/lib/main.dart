@@ -110,6 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
         themeColor: Color(0xFFFFAC5D),
         progressBackgroundColor: Color(0x5AFFAC5D),
         isForce: true,
+        updateButtonTxt: '升级',
+        ignoreButtonTxt: '忽略此版本',
         enableIgnore: true, onIgnore: () {
           ToastUtils.waring("忽略");
           dialog.dismiss();

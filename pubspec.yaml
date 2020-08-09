@@ -2,6 +2,8 @@ name: flutter_update_dialog
 description: Application version update dialog.
 version: 0.0.1
 homepage: https://github.com/xuexiangjys/flutter_update_dialog
+repository: https://github.com/xuexiangjys/flutter_update_dialog
+issue_tracker: https://github.com/xuexiangjys/flutter_update_dialog/issues
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
