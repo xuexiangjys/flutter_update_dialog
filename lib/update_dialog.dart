@@ -12,24 +12,24 @@ class UpdateDialog {
 
   UpdateDialog(BuildContext context,
       {double width = 0.0,
-      @required title,
-      @required updateContent,
-      @required onUpdate,
+      @required String title,
+      @required String updateContent,
+      @required VoidCallback onUpdate,
       double titleTextSize = 16.0,
-      double contextTextSize = 14.0,
+      double contentTextSize = 14.0,
       double buttonTextSize = 14.0,
       double progress = -1.0,
-      progressBackgroundColor = const Color(0xFFFFCDD2),
-      topImage,
+      Color progressBackgroundColor = const Color(0xFFFFCDD2),
+      Image topImage,
       double extraHeight = 5.0,
       double radius = 4.0,
-      themeColor = Colors.red,
-      enableIgnore = false,
-      onIgnore,
-      isForce = false,
-      updateButtonTxt,
-      ignoreButtonTxt,
-      onClose}) {
+      Color themeColor = Colors.red,
+      bool enableIgnore = false,
+      VoidCallback onIgnore,
+      bool isForce = false,
+      String updateButtonText,
+      String ignoreButtonText,
+      VoidCallback onClose}) {
     _context = context;
     _widget = UpdateWidget(
         width: width,
@@ -37,7 +37,7 @@ class UpdateDialog {
         updateContent: updateContent,
         onUpdate: onUpdate,
         titleTextSize: titleTextSize,
-        contextTextSize: contextTextSize,
+        contentTextSize: contentTextSize,
         buttonTextSize: buttonTextSize,
         progress: progress,
         topImage: topImage,
@@ -48,8 +48,8 @@ class UpdateDialog {
         enableIgnore: enableIgnore,
         onIgnore: onIgnore,
         isForce: isForce,
-        updateButtonTxt: updateButtonTxt ?? '更新',
-        ignoreButtonTxt: ignoreButtonTxt ?? '忽略此版本',
+        updateButtonText: updateButtonText ?? '更新',
+        ignoreButtonText: ignoreButtonText ?? '忽略此版本',
         onClose: onClose != null ? onClose : () => {dismiss()});
   }
 
@@ -104,30 +104,30 @@ class UpdateDialog {
   /// 显示版本更新提示框
   static UpdateDialog showUpdate(BuildContext context,
       {double width = 0.0,
-      @required title,
-      @required updateContent,
-      @required onUpdate,
+      @required String title,
+      @required String updateContent,
+      @required VoidCallback onUpdate,
       double titleTextSize = 16.0,
-      double contextTextSize = 14.0,
+      double contentTextSize = 14.0,
       double buttonTextSize = 14.0,
       double progress = -1.0,
-      progressBackgroundColor = const Color(0xFFFFCDD2),
-      topImage,
+      Color progressBackgroundColor = const Color(0xFFFFCDD2),
+      Image topImage,
       double extraHeight = 5.0,
       double radius = 4.0,
-      themeColor = Colors.red,
-      enableIgnore = false,
-      onIgnore,
-      updateButtonTxt,
-      ignoreButtonTxt,
-      isForce = false}) {
+      Color themeColor = Colors.red,
+      bool enableIgnore = false,
+      VoidCallback onIgnore,
+      String updateButtonText,
+      String ignoreButtonText,
+      bool isForce = false}) {
     UpdateDialog dialog = UpdateDialog(context,
         width: width,
         title: title,
         updateContent: updateContent,
         onUpdate: onUpdate,
         titleTextSize: titleTextSize,
-        contextTextSize: contextTextSize,
+        contentTextSize: contentTextSize,
         buttonTextSize: buttonTextSize,
         progress: progress,
         topImage: topImage,
@@ -137,8 +137,8 @@ class UpdateDialog {
         progressBackgroundColor: progressBackgroundColor,
         enableIgnore: enableIgnore,
         isForce: isForce,
-        updateButtonTxt: updateButtonTxt,
-        ignoreButtonTxt: ignoreButtonTxt,
+        updateButtonText: updateButtonText,
+        ignoreButtonText: ignoreButtonText,
         onIgnore: onIgnore);
     dialog.show();
     return dialog;
@@ -160,7 +160,7 @@ class UpdateWidget extends StatefulWidget {
   final double titleTextSize;
 
   /// 更新文字内容的大小
-  final double contextTextSize;
+  final double contentTextSize;
 
   /// 按钮文字的大小
   final double buttonTextSize;
@@ -198,10 +198,10 @@ class UpdateWidget extends StatefulWidget {
   final bool isForce;
 
   /// 更新按钮内容
-  final String updateButtonTxt;
+  final String updateButtonText;
 
   /// 忽略按钮内容
-  final String ignoreButtonTxt;
+  final String ignoreButtonText;
 
   UpdateWidget(
       {Key key,
@@ -210,7 +210,7 @@ class UpdateWidget extends StatefulWidget {
       @required this.updateContent,
       @required this.onUpdate,
       this.titleTextSize = 16.0,
-      this.contextTextSize = 14.0,
+      this.contentTextSize = 14.0,
       this.buttonTextSize = 14.0,
       this.progress = -1.0,
       this.progressBackgroundColor = const Color(0xFFFFCDD2),
@@ -221,8 +221,8 @@ class UpdateWidget extends StatefulWidget {
       this.enableIgnore = false,
       this.onIgnore,
       this.isForce = false,
-      this.updateButtonTxt = '更新',
-      this.ignoreButtonTxt = '忽略此版本',
+      this.updateButtonText = '更新',
+      this.ignoreButtonText = '忽略此版本',
       this.onClose})
       : super(key: key);
 
@@ -294,7 +294,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Text(widget.updateContent,
                             style: TextStyle(
-                                fontSize: widget.contextTextSize,
+                                fontSize: widget.contentTextSize,
                                 color: Color(0xFF666666))),
                       ),
                       widget.progress < 0
@@ -306,7 +306,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                                       borderRadius: BorderRadius.circular(5)),
                                   elevation: 0,
                                   highlightElevation: 0,
-                                  child: Text(widget.updateButtonTxt,
+                                  child: Text(widget.updateButtonText,
                                       style: TextStyle(
                                           fontSize: widget.buttonTextSize)),
                                   color: widget.themeColor,
@@ -321,7 +321,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5)),
-                                        child: Text(widget.ignoreButtonTxt,
+                                        child: Text(widget.ignoreButtonText,
                                             style: TextStyle(
                                                 fontSize:
                                                     widget.buttonTextSize)),

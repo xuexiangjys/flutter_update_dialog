@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: "是否升级到4.1.4版本？",
         updateContent: "新版本大小:2.0M\n1.xxxxxxx\n2.xxxxxxx\n3.xxxxxxx",
         titleTextSize: 14,
-        contextTextSize: 12,
+        contentTextSize: 12,
         buttonTextSize: 12,
         topImage: Image.asset('assets/bg_update_top.png'),
         extraHeight: 5,
@@ -110,8 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
         themeColor: Color(0xFFFFAC5D),
         progressBackgroundColor: Color(0x5AFFAC5D),
         isForce: true,
-        updateButtonTxt: '升级',
-        ignoreButtonTxt: '忽略此版本',
+        updateButtonText: '升级',
+        ignoreButtonText: '忽略此版本',
         enableIgnore: true, onIgnore: () {
           ToastUtils.waring("忽略");
           dialog.dismiss();
