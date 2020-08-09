@@ -1,6 +1,20 @@
 # flutter_dialog_example
 
-A example for flutter_update_dialog.
+Demonstrates how to use the flutter_update_dialog plugin.
+
+## Demonstration
+
+![演示](./art/demo.gif)
+
+## Screenshot
+
+* Default Style
+
+![](./art/1.png)
+
+* Custom Style
+
+![](./art/2.png)
 
 ## Getting Started
 

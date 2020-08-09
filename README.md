@@ -76,7 +76,7 @@ dependencies:
 ## Property value
 
 name | type | default ｜ description
-:-|:-|:-|:-
+:-|:-:|:-:|:-
 width | double | 0.618 * screenWidth ｜ dialog width
 title | String | / ｜ dialog title
 updateContent | String | / ｜ Update the modified content
