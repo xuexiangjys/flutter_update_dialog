@@ -1,5 +1,5 @@
 name: flutter_update_dialog
-description: Application version update dialog.
+description: A beautiful application version update dialog for flutter.You can customize your own version update pop-up window!
 version: 0.0.1
 homepage: https://github.com/xuexiangjys/flutter_update_dialog
 repository: https://github.com/xuexiangjys/flutter_update_dialog
