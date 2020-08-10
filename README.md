@@ -82,8 +82,8 @@ title | String | / | dialog title
 updateContent | String | / | Update the modified content
 onUpdate | VoidCallback | / | Click on the update button event
 titleTextSize | double | 16.0 | The size of the title text
-contextTextSize | double | 14.0 | The size of the title text
-buttonTextSize | double | 14.0 | The size of the title text
+contentTextSize | double | 14.0 | The size of the update content text
+buttonTextSize | double | 14.0 | The size of the button text
 themeColor | Color | Colors.red | Theme color
 progressBackgroundColor | Color | 0xFFFFCDD2 | The background color of the progress bar
 topImage | Image | / | Picture at the top
