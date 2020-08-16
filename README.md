@@ -5,7 +5,11 @@
 [![Issue](https://img.shields.io/github/issues/xuexiangjys/flutter_update_dialog.svg)](https://github.com/xuexiangjys/flutter_update_dialog/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/flutter_update_dialog.svg)](https://github.com/xuexiangjys/flutter_update_dialog)
 
-Application version update dialog.
+Application version update dialog. With it, you can customize the logic of version update.
+
+You can refer to the following project:
+
+[https://github.com/xuexiangjys/flutter_app_update_example](https://github.com/xuexiangjys/flutter_app_update_example)
 
 ## Getting Started
 
