@@ -1,3 +1,7 @@
+## 1.0.0
+
+* The first release version.
+
 ## 0.0.1
 
-* The first version.
+* The first test version.
