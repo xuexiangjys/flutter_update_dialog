@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title = ""}) : super(key: key);
 
   final String title;
 
@@ -41,22 +41,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(10),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, //文本是起始端对齐
-                    children: <Widget>[
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, //文本是起始端对齐
+                children: <Widget>[
                   ButtonBar(
-                    alignment:
-                        MainAxisAlignment.start, //布局方向，默认MainAxisAlignment.end
+                    alignment: MainAxisAlignment.start, //布局方向，默认MainAxisAlignment.end
                     mainAxisSize: MainAxisSize.min, //主轴大小，默认MainAxisSize.max
                     children: <Widget>[
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text('默认样式'),
-                        color: Theme.of(context).primaryColor,
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
+                        // color: Theme.of(context).primaryColor,
                         onPressed: defaultStyle,
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text('自定义样式'),
-                        color: Theme.of(context).primaryColor,
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
                         onPressed: customStyle,
                       ),
                     ],
@@ -64,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ])));
   }
 
-  UpdateDialog dialog;
+  UpdateDialog? dialog;
 
   double progress = 0.0;
 
@@ -74,27 +73,25 @@ class _MyHomePageState extends State<MyHomePage> {
       progress = progress + 0.02;
       if (progress > 1.0001) {
         timer.cancel();
-        dialog.dismiss();
+        dialog!.dismiss();
         progress = 0;
         ToastUtils.success("升级成功！");
       } else {
-        dialog.update(progress);
+        dialog!.update(progress);
       }
     });
   }
 
   void defaultStyle() {
-    if (dialog != null && dialog.isShowing()) {
+    if (dialog != null && dialog!.isShowing()) {
       return;
     }
-    dialog = UpdateDialog.showUpdate(context,
-        title: "是否升级到4.1.4版本？",
-        updateContent: "新版本大小:2.0M\n1.xxxxxxx\n2.xxxxxxx\n3.xxxxxxx",
-        onUpdate: onUpdate);
+    dialog =
+        UpdateDialog.showUpdate(context, title: "是否升级到4.1.4版本？", updateContent: "新版本大小:2.0M\n1.xxxxxxx\n2.xxxxxxx\n3.xxxxxxx", onUpdate: onUpdate);
   }
 
   void customStyle() {
-    if (dialog != null && dialog.isShowing()) {
+    if (dialog != null && dialog!.isShowing()) {
       return;
     }
     dialog = UpdateDialog.showUpdate(context,
@@ -113,9 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
         updateButtonText: '升级',
         ignoreButtonText: '忽略此版本',
         enableIgnore: true, onIgnore: () {
-          ToastUtils.waring("忽略");
-          dialog.dismiss();
-        },
-        onUpdate: onUpdate);
+      ToastUtils.waring("忽略");
+      dialog!.dismiss();
+    }, onUpdate: onUpdate);
   }
 }
