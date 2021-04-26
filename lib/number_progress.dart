@@ -9,7 +9,7 @@ class NumberProgress extends StatelessWidget {
   final double value;
 
   /// 进度条的背景颜色
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 进度条的色值
   final Color valueColor;
@@ -27,11 +27,11 @@ class NumberProgress extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   NumberProgress(
-      {Key key,
+      {Key? key,
       this.height = 10.0,
       this.value = 0.0,
       this.backgroundColor,
-      this.valueColor,
+      this.valueColor = Colors.blue,
       this.textColor = Colors.white,
       this.textSize = 8.0,
       this.padding = EdgeInsets.zero,

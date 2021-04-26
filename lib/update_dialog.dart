@@ -7,29 +7,29 @@ import 'number_progress.dart';
 ///版本更新加提示框
 class UpdateDialog {
   bool _isShowing = false;
-  BuildContext _context;
-  UpdateWidget _widget;
+  late BuildContext _context;
+  late UpdateWidget _widget;
 
   UpdateDialog(BuildContext context,
       {double width = 0.0,
-      @required String title,
-      @required String updateContent,
-      @required VoidCallback onUpdate,
+      required String title,
+      required String updateContent,
+      required VoidCallback onUpdate,
       double titleTextSize = 16.0,
       double contentTextSize = 14.0,
       double buttonTextSize = 14.0,
       double progress = -1.0,
       Color progressBackgroundColor = const Color(0xFFFFCDD2),
-      Image topImage,
+      Image? topImage,
       double extraHeight = 5.0,
       double radius = 4.0,
       Color themeColor = Colors.red,
       bool enableIgnore = false,
-      VoidCallback onIgnore,
+      VoidCallback? onIgnore,
       bool isForce = false,
-      String updateButtonText,
-      String ignoreButtonText,
-      VoidCallback onClose}) {
+      String? updateButtonText,
+      String? ignoreButtonText,
+      VoidCallback? onClose}) {
     _context = context;
     _widget = UpdateWidget(
         width: width,
@@ -104,22 +104,22 @@ class UpdateDialog {
   /// 显示版本更新提示框
   static UpdateDialog showUpdate(BuildContext context,
       {double width = 0.0,
-      @required String title,
-      @required String updateContent,
-      @required VoidCallback onUpdate,
+      required String title,
+      required String updateContent,
+      required VoidCallback onUpdate,
       double titleTextSize = 16.0,
       double contentTextSize = 14.0,
       double buttonTextSize = 14.0,
       double progress = -1.0,
       Color progressBackgroundColor = const Color(0xFFFFCDD2),
-      Image topImage,
+      Image? topImage,
       double extraHeight = 5.0,
       double radius = 4.0,
       Color themeColor = Colors.red,
       bool enableIgnore = false,
-      VoidCallback onIgnore,
-      String updateButtonText,
-      String ignoreButtonText,
+      VoidCallback? onIgnore,
+      String? updateButtonText,
+      String? ignoreButtonText,
       bool isForce = false}) {
     UpdateDialog dialog = UpdateDialog(context,
         width: width,
@@ -166,7 +166,7 @@ class UpdateWidget extends StatefulWidget {
   final double buttonTextSize;
 
   /// 顶部图片
-  final Widget topImage;
+  final Widget? topImage;
 
   /// 拓展高度(适配顶部图片高度不一致的情况）
   final double extraHeight;
@@ -184,7 +184,7 @@ class UpdateWidget extends StatefulWidget {
   final bool enableIgnore;
 
   /// 更新事件
-  final VoidCallback onIgnore;
+  final VoidCallback? onIgnore;
 
   double progress;
 
@@ -192,7 +192,7 @@ class UpdateWidget extends StatefulWidget {
   final Color progressBackgroundColor;
 
   /// 更新事件
-  final VoidCallback onClose;
+  final VoidCallback? onClose;
 
   /// 是否是强制更新
   final bool isForce;
@@ -204,11 +204,11 @@ class UpdateWidget extends StatefulWidget {
   final String ignoreButtonText;
 
   UpdateWidget(
-      {Key key,
+      {Key? key,
       this.width = 0.0,
-      @required this.title,
-      @required this.updateContent,
-      @required this.onUpdate,
+      required this.title,
+      required this.updateContent,
+      required this.onUpdate,
       this.titleTextSize = 16.0,
       this.contentTextSize = 14.0,
       this.buttonTextSize = 14.0,
@@ -301,36 +301,50 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                           ? Column(children: <Widget>[
                               FractionallySizedBox(
                                 widthFactor: 1,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  elevation: 0,
-                                  highlightElevation: 0,
-                                  child: Text(widget.updateButtonText,
-                                      style: TextStyle(
-                                          fontSize: widget.buttonTextSize)),
-                                  color: widget.themeColor,
-                                  textColor: Colors.white,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    textStyle: MaterialStateProperty.all(
+                                        TextStyle(
+                                            fontSize: widget.buttonTextSize)),
+                                    foregroundColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5))),
+                                    elevation: MaterialStateProperty.all(0),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        widget.themeColor),
+                                  ),
+                                  child: Text(widget.updateButtonText),
                                   onPressed: widget.onUpdate,
                                 ),
                               ),
                               widget.enableIgnore && widget.onIgnore != null
                                   ? FractionallySizedBox(
                                       widthFactor: 1,
-                                      child: FlatButton(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        child: Text(widget.ignoreButtonText,
-                                            style: TextStyle(
-                                                fontSize:
-                                                    widget.buttonTextSize)),
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        textColor: Color(0xFF666666),
+                                      child: TextButton(
+                                        style: ButtonStyle(
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                          textStyle: MaterialStateProperty.all(
+                                              TextStyle(
+                                                  fontSize:
+                                                      widget.buttonTextSize)),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color(0xFF666666)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5))),
+                                        ),
+                                        child: Text(widget.ignoreButtonText),
                                         onPressed: widget.onIgnore,
-                                      ),
-                                    )
+                                      ))
                                   : SizedBox()
                             ])
                           : NumberProgress(
