@@ -1,6 +1,6 @@
 # flutter_update_dialog
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://pub.dev/packages/flutter_update_dialog)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://pub.dev/packages/flutter_update_dialog)
 [![Build Status](https://travis-ci.org/xuexiangjys/flutter_update_dialog.svg?branch=master)](https://travis-ci.org/xuexiangjys/flutter_update_dialog)
 [![Issue](https://img.shields.io/github/issues/xuexiangjys/flutter_update_dialog.svg)](https://github.com/xuexiangjys/flutter_update_dialog/issues)
 [![Star](https://img.shields.io/github/stars/xuexiangjys/flutter_update_dialog.svg)](https://github.com/xuexiangjys/flutter_update_dialog)
@@ -19,7 +19,7 @@ You should ensure that you add the `flutter_update_dialog` as a dependency in yo
 ```
 // pub 集成
 dependencies:
-  flutter_update_dialog: ^1.0.0
+  flutter_update_dialog: ^2.0.0
 
 //github  集成
 dependencies:

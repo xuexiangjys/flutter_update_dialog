@@ -50,27 +50,27 @@ class UpdateDialog {
         isForce: isForce,
         updateButtonText: updateButtonText ?? '更新',
         ignoreButtonText: ignoreButtonText ?? '忽略此版本',
-        onClose: onClose != null ? onClose : () => {dismiss()});
+        onClose: onClose ?? () => dismiss());
   }
 
   /// 显示弹窗
   Future<bool> show() {
     try {
       if (isShowing()) {
-        return Future.value(false);
+        return Future<bool>.value(false);
       }
-      showDialog(
+      showDialog<bool>(
           context: _context,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return WillPopScope(
-                onWillPop: () => Future.value(false), child: _widget);
+                onWillPop: () => Future<bool>.value(false), child: _widget);
           });
       _isShowing = true;
-      return Future.value(true);
+      return Future<bool>.value(true);
     } catch (err) {
       _isShowing = false;
-      return Future.value(false);
+      return Future<bool>.value(false);
     }
   }
 
@@ -80,12 +80,12 @@ class UpdateDialog {
       if (_isShowing) {
         _isShowing = false;
         Navigator.pop(_context);
-        return Future.value(true);
+        return Future<bool>.value(true);
       } else {
-        return Future.value(false);
+        return Future<bool>.value(false);
       }
     } catch (err) {
-      return Future.value(false);
+      return Future<bool>.value(false);
     }
   }
 
@@ -121,7 +121,7 @@ class UpdateDialog {
       String? updateButtonText,
       String? ignoreButtonText,
       bool isForce = false}) {
-    UpdateDialog dialog = UpdateDialog(context,
+    final UpdateDialog dialog = UpdateDialog(context,
         width: width,
         title: title,
         updateContent: updateContent,
@@ -226,9 +226,9 @@ class UpdateWidget extends StatefulWidget {
       this.onClose})
       : super(key: key);
 
-  _UpdateWidgetState _state = _UpdateWidgetState();
+  final _UpdateWidgetState _state = _UpdateWidgetState();
 
-  update(double progress) {
+  void update(double progress) {
     _state.update(progress);
   }
 
@@ -237,7 +237,7 @@ class UpdateWidget extends StatefulWidget {
 }
 
 class _UpdateWidgetState extends State<UpdateWidget> {
-  update(double progress) {
+  void update(double progress) {
     if (!mounted) {
       return;
     }
@@ -248,7 +248,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double dialogWidth =
+    final double dialogWidth =
         widget.width <= 0 ? getFitWidth(context) * 0.618 : widget.width;
     return Material(
         type: MaterialType.transparency,
@@ -261,16 +261,15 @@ class _UpdateWidgetState extends State<UpdateWidget> {
               children: <Widget>[
                 SizedBox(
                   width: dialogWidth,
-                  child: widget.topImage != null
-                      ? widget.topImage
-                      : Image.asset('assets/update_bg_app_top.png',
+                  child: widget.topImage ??
+                      Image.asset('assets/update_bg_app_top.png',
                           package: 'flutter_update_dialog', fit: BoxFit.fill),
                 ),
                 Container(
                   width: dialogWidth,
                   alignment: Alignment.center,
-                  padding:
-                      EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 8, bottom: 8),
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -291,89 +290,86 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                                 color: Colors.black)),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(widget.updateContent,
                             style: TextStyle(
                                 fontSize: widget.contentTextSize,
-                                color: Color(0xFF666666))),
+                                color: const Color(0xFF666666))),
                       ),
-                      widget.progress < 0
-                          ? Column(children: <Widget>[
-                              FractionallySizedBox(
+                      if (widget.progress < 0)
+                        Column(children: <Widget>[
+                          FractionallySizedBox(
+                            widthFactor: 1,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                textStyle: MaterialStateProperty.all(
+                                    TextStyle(fontSize: widget.buttonTextSize)),
+                                foregroundColor:
+                                    MaterialStateProperty.all(Colors.white),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5))),
+                                elevation: MaterialStateProperty.all(0),
+                                backgroundColor: MaterialStateProperty.all(
+                                    widget.themeColor),
+                              ),
+                              child: Text(widget.updateButtonText),
+                              onPressed: widget.onUpdate,
+                            ),
+                          ),
+                          if (widget.enableIgnore && widget.onIgnore != null)
+                            FractionallySizedBox(
                                 widthFactor: 1,
-                                child: ElevatedButton(
+                                child: TextButton(
                                   style: ButtonStyle(
                                     tapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     textStyle: MaterialStateProperty.all(
                                         TextStyle(
                                             fontSize: widget.buttonTextSize)),
-                                    foregroundColor:
-                                        MaterialStateProperty.all(Colors.white),
+                                    foregroundColor: MaterialStateProperty.all(
+                                        const Color(0xFF666666)),
                                     shape: MaterialStateProperty.all(
                                         RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5))),
-                                    elevation: MaterialStateProperty.all(0),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        widget.themeColor),
                                   ),
-                                  child: Text(widget.updateButtonText),
-                                  onPressed: widget.onUpdate,
-                                ),
-                              ),
-                              widget.enableIgnore && widget.onIgnore != null
-                                  ? FractionallySizedBox(
-                                      widthFactor: 1,
-                                      child: TextButton(
-                                        style: ButtonStyle(
-                                          tapTargetSize:
-                                              MaterialTapTargetSize.shrinkWrap,
-                                          textStyle: MaterialStateProperty.all(
-                                              TextStyle(
-                                                  fontSize:
-                                                      widget.buttonTextSize)),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color(0xFF666666)),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5))),
-                                        ),
-                                        child: Text(widget.ignoreButtonText),
-                                        onPressed: widget.onIgnore,
-                                      ))
-                                  : SizedBox()
-                            ])
-                          : NumberProgress(
-                              value: widget.progress,
-                              backgroundColor: widget.progressBackgroundColor,
-                              valueColor: widget.themeColor,
-                              padding: EdgeInsets.symmetric(vertical: 10))
+                                  child: Text(widget.ignoreButtonText),
+                                  onPressed: widget.onIgnore,
+                                ))
+                          else
+                            const SizedBox()
+                        ])
+                      else
+                        NumberProgress(
+                            value: widget.progress,
+                            backgroundColor: widget.progressBackgroundColor,
+                            valueColor: widget.themeColor,
+                            padding: const EdgeInsets.symmetric(vertical: 10))
                     ],
                   )),
                 ),
-                !widget.isForce
-                    ? Column(children: <Widget>[
-                        SizedBox(
-                            width: 1.5,
-                            height: 50,
-                            child: DecoratedBox(
-                                decoration:
-                                    BoxDecoration(color: Colors.white))),
-                        IconButton(
-                          iconSize: 30,
-                          constraints:
-                              BoxConstraints(maxHeight: 30, maxWidth: 30),
-                          padding: EdgeInsets.zero,
-                          icon: Image.asset('assets/update_ic_close.png',
-                              package: 'flutter_update_dialog'),
-                          onPressed: widget.onClose,
-                        )
-                      ])
-                    : SizedBox()
+                if (!widget.isForce)
+                  Column(children: <Widget>[
+                    const SizedBox(
+                        width: 1.5,
+                        height: 50,
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(color: Colors.white))),
+                    IconButton(
+                      iconSize: 30,
+                      constraints:
+                          const BoxConstraints(maxHeight: 30, maxWidth: 30),
+                      padding: EdgeInsets.zero,
+                      icon: Image.asset('assets/update_ic_close.png',
+                          package: 'flutter_update_dialog'),
+                      onPressed: widget.onClose,
+                    )
+                  ])
+                else
+                  const SizedBox()
               ],
             ),
           ),
